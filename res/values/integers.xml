@@ -19,7 +19,7 @@
     <integer name="contact_tile_column_count_in_favorites">3</integer>
 
     <!-- Determines the number of columns in a ContactTileRow -->
-    <integer name="contact_tile_column_count">2</integer>
+    <integer name="contact_tile_column_count">3</integer>
 
     <!-- Number of lines the QuickContact title can have -->
     <integer name="quickcontact_title_lines">1</integer>

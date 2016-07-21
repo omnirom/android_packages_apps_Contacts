@@ -39,6 +39,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -67,6 +68,17 @@ public class GroupBrowseListFragment extends Fragment
          */
         void onViewGroupAction(Uri groupUri);
 
+        /**
+         * Opens the specified group for editing.
+         *
+         * @param groupUri for the group that the user wishes to edit.
+         */
+        void onEditGroupAction(Uri groupUri);
+
+        /**
+         * Add a new group.
+         */
+        void onCreateGroupAction();
     }
 
     private static final String TAG = "GroupBrowseListFragment";
@@ -111,6 +123,12 @@ public class GroupBrowseListFragment extends Fragment
 
         mRootView = inflater.inflate(R.layout.group_browse_list_fragment, null);
         mEmptyView = (TextView)mRootView.findViewById(R.id.empty);
+        mEmptyView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onCreateGroupAction();
+            }
+        });
 
         mAdapter = new GroupBrowseListAdapter(mContext);
         mAdapter.setSelectionVisible(mSelectionVisible);
@@ -129,7 +147,16 @@ public class GroupBrowseListFragment extends Fragment
                 }
             }
         });
-
+        mListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                GroupListItemViewCache groupListItem = (GroupListItemViewCache) view.getTag();
+                if (groupListItem != null) {
+                    editGroup(groupListItem.getUri());
+                }
+                return true;
+            }
+        });
         mListView.setEmptyView(mEmptyView);
         configureVerticalScrollbar();
 
@@ -160,17 +187,6 @@ public class GroupBrowseListFragment extends Fragment
     private void configureVerticalScrollbar() {
         mListView.setVerticalScrollbarPosition(mVerticalScrollbarPosition);
         mListView.setScrollBarStyle(ListView.SCROLLBARS_OUTSIDE_OVERLAY);
-        int leftPadding = 0;
-        int rightPadding = 0;
-        if (mVerticalScrollbarPosition == View.SCROLLBAR_POSITION_LEFT) {
-            leftPadding = mContext.getResources().getDimensionPixelOffset(
-                    R.dimen.list_visible_scrollbar_padding);
-        } else {
-            rightPadding = mContext.getResources().getDimensionPixelOffset(
-                    R.dimen.list_visible_scrollbar_padding);
-        }
-        mListView.setPadding(leftPadding, mListView.getPaddingTop(),
-                rightPadding, mListView.getPaddingBottom());
     }
 
     @Override
@@ -252,6 +268,11 @@ public class GroupBrowseListFragment extends Fragment
     private void viewGroup(Uri groupUri) {
         setSelectedGroup(groupUri);
         if (mListener != null) mListener.onViewGroupAction(groupUri);
+    }
+
+    private void editGroup(Uri groupUri) {
+        setSelectedGroup(groupUri);
+        if (mListener != null) mListener.onEditGroupAction(groupUri);
     }
 
     public void setSelectedUri(Uri groupUri) {
