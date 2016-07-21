@@ -43,6 +43,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -101,8 +102,6 @@ public class GroupDetailFragment extends Fragment implements OnScrollListener {
     private View mRootView;
     private ViewGroup mGroupSourceViewContainer;
     private View mGroupSourceView;
-    private TextView mGroupTitle;
-    private TextView mGroupSize;
     private ListView mMemberListView;
     private View mEmptyView;
 
@@ -116,6 +115,7 @@ public class GroupDetailFragment extends Fragment implements OnScrollListener {
     private long mGroupId;
     private String mGroupName;
     private String mAccountTypeString;
+    private String mAccountName;
     private String mDataSet;
     private boolean mIsReadOnly;
     private boolean mIsMembershipEditable;
@@ -152,11 +152,15 @@ public class GroupDetailFragment extends Fragment implements OnScrollListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState) {
         setHasOptionsMenu(true);
         mRootView = inflater.inflate(R.layout.group_detail_fragment, container, false);
-        mGroupTitle = (TextView) mRootView.findViewById(R.id.group_title);
-        mGroupSize = (TextView) mRootView.findViewById(R.id.group_size);
         mGroupSourceViewContainer = (ViewGroup) mRootView.findViewById(
                 R.id.group_source_view_container);
         mEmptyView = mRootView.findViewById(android.R.id.empty);
+        mEmptyView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onEditRequested(mGroupUri);
+            }
+        });
         mMemberListView = (ListView) mRootView.findViewById(android.R.id.list);
         mMemberListView.setItemsCanFocus(true);
         mMemberListView.setAdapter(mAdapter);
@@ -231,6 +235,11 @@ public class GroupDetailFragment extends Fragment implements OnScrollListener {
         public int getApproximateTileWidth() {
             return getView().getWidth() / mAdapter.getColumnCount();
         }
+
+        @Override
+        public void onContactLongSelected(Uri contactUri, Rect viewRect) {
+            mListener.onEditRequested(mGroupUri);
+        }
     };
 
     /**
@@ -299,6 +308,7 @@ public class GroupDetailFragment extends Fragment implements OnScrollListener {
         cursor.moveToPosition(-1);
         if (cursor.moveToNext()) {
             mAccountTypeString = cursor.getString(GroupMetaDataLoader.ACCOUNT_TYPE);
+            mAccountName = cursor.getString(GroupMetaDataLoader.ACCOUNT_NAME);
             mDataSet = cursor.getString(GroupMetaDataLoader.DATA_SET);
             mGroupId = cursor.getLong(GroupMetaDataLoader.GROUP_ID);
             mGroupName = cursor.getString(GroupMetaDataLoader.TITLE);
@@ -314,11 +324,7 @@ public class GroupDetailFragment extends Fragment implements OnScrollListener {
     }
 
     private void updateTitle(String title) {
-        if (mGroupTitle != null) {
-            mGroupTitle.setText(title);
-        } else {
-            mListener.onGroupTitleUpdated(title);
-        }
+        mListener.onGroupTitleUpdated(title);
     }
 
     /**
@@ -344,11 +350,7 @@ public class GroupDetailFragment extends Fragment implements OnScrollListener {
             }
         }
 
-        if (mGroupSize != null) {
-            mGroupSize.setText(groupSizeString);
-        } else {
-            mListener.onGroupSizeUpdated(groupSizeString);
-        }
+        mListener.onGroupSizeUpdated(groupSizeString);
     }
 
     /**
@@ -365,6 +367,17 @@ public class GroupDetailFragment extends Fragment implements OnScrollListener {
                 manager.getAccountType(accountTypeString, dataSet);
 
         mIsMembershipEditable = accountType.isGroupMembershipEditable();
+
+        // Setup the account header, only when exists.
+        if (mRootView.findViewById(R.id.account_header) != null) {
+            CharSequence accountTypeDisplayLabel = accountType.getDisplayLabel(mContext);
+            ImageView accountIcon = (ImageView) mRootView.findViewById(R.id.account_icon);
+            TextView accountTypeTextView = (TextView) mRootView.findViewById(R.id.account_type);
+            TextView accountNameTextView = (TextView) mRootView.findViewById(R.id.account_name);
+            accountNameTextView.setText(mAccountName);
+            accountTypeTextView.setText(accountTypeDisplayLabel);
+            accountIcon.setImageDrawable(accountType.getDisplayIcon(mContext));
+        }
 
         // If the group action should be shown in the action bar, then pass the data to the
         // listener who will take care of setting up the view and click listener. There is nothing
