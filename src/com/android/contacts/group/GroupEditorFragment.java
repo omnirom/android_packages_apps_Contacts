@@ -76,7 +76,9 @@ import com.android.contacts.common.util.ViewUtil;
 import com.google.common.base.Objects;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class GroupEditorFragment extends Fragment implements SelectAccountDialogFragment.Listener {
     private static final String TAG = "GroupEditorFragment";
@@ -428,6 +430,7 @@ public class GroupEditorFragment extends Fragment implements SelectAccountDialog
         if (mAutoCompleteTextView != null) {
             mAutoCompleteAdapter = new SuggestedMemberListAdapter(mContext,
                     android.R.layout.simple_dropdown_item_1line);
+            mAutoCompleteTextView.setThreshold(1);
             mAutoCompleteAdapter.setContentResolver(mContentResolver);
             mAutoCompleteAdapter.setAccountType(mAccountType);
             mAutoCompleteAdapter.setAccountName(mAccountName);
@@ -713,8 +716,13 @@ public class GroupEditorFragment extends Fragment implements SelectAccountDialog
     }
 
     private void addMember(Member member) {
-        // Update the display list
-        mListMembersToAdd.add(member);
+        // If the contact was just removed during this session, remove it from
+        // the list of members to remove
+        if (mListMembersToRemove.contains(member)) {
+            mListMembersToRemove.remove(member);
+        } else {
+            mListMembersToAdd.add(member);
+        }
         mListToDisplay.add(member);
         mMemberListAdapter.notifyDataSetChanged();
 
