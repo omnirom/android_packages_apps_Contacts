@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.android.contacts.GroupMemberLoader;
+import com.android.contacts.common.R;
 import com.android.contacts.common.list.ContactEntry;
 import com.android.contacts.common.list.ContactTileAdapter;
 import com.android.contacts.common.list.ContactTileView;
@@ -34,6 +35,7 @@ public class GroupMemberTileAdapter extends ContactTileAdapter {
 
     public GroupMemberTileAdapter(Context context, ContactTileView.Listener listener, int numCols) {
         super(context, listener, numCols, DisplayType.GROUP_MEMBERS);
+        setColumnCount(1);
     }
 
     @Override
@@ -56,6 +58,10 @@ public class GroupMemberTileAdapter extends ContactTileAdapter {
         return ViewTypes.STARRED;
     }
 
+    protected int getLayoutResourceId(int viewType) {
+        return R.layout.group_tile;
+    }
+    
     @Override
     protected int getDividerPosition(Cursor cursor) {
         // No divider
