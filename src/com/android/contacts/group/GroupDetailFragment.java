@@ -157,6 +157,12 @@ public class GroupDetailFragment extends Fragment implements OnScrollListener {
         mGroupSourceViewContainer = (ViewGroup) mRootView.findViewById(
                 R.id.group_source_view_container);
         mEmptyView = mRootView.findViewById(android.R.id.empty);
+        mEmptyView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onEditRequested(mGroupUri);
+            }
+        });
         mMemberListView = (ListView) mRootView.findViewById(android.R.id.list);
         mMemberListView.setItemsCanFocus(true);
         mMemberListView.setAdapter(mAdapter);
@@ -230,6 +236,11 @@ public class GroupDetailFragment extends Fragment implements OnScrollListener {
         @Override
         public int getApproximateTileWidth() {
             return getView().getWidth() / mAdapter.getColumnCount();
+        }
+
+        @Override
+        public void onContactLongSelected(Uri contactUri, Rect viewRect) {
+            mListener.onEditRequested(mGroupUri);
         }
     };
 

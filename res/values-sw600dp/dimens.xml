@@ -45,12 +45,6 @@
     <dimen name="join_header_top_margin">16dip</dimen>
     <dimen name="join_header_bottom_margin">16dip</dimen>
 
-    <!-- Left padding for a group member list item -->
-    <dimen name="group_member_item_left_padding">12dip</dimen>
-    <!-- Left margin for the group member list to match the built in margin in the autocomplete asset -->
-    <dimen name="group_editor_member_list_left_margin">4dip</dimen>
-    <!-- Right margin for the group member list to match the built in margin in the autocomplete asset -->
-    <dimen name="group_editor_member_list_right_margin">4dip</dimen>
     <!-- Account title left padding -->
     <dimen name="account_container_left_padding">16dip</dimen>
     <!-- Left padding of the auto complete field to line hint text up with member list -->
