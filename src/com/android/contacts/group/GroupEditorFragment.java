@@ -71,12 +71,15 @@ import com.android.contacts.common.editor.SelectAccountDialogFragment;
 import com.android.contacts.group.SuggestedMemberListAdapter.SuggestedMember;
 import com.android.contacts.common.model.AccountTypeManager;
 import com.android.contacts.common.util.AccountsListAdapter.AccountListFilter;
+import com.android.contacts.common.util.ImplicitIntentsUtil;
 import com.android.contacts.common.util.ViewUtil;
 
 import com.google.common.base.Objects;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class GroupEditorFragment extends Fragment implements SelectAccountDialogFragment.Listener {
     private static final String TAG = "GroupEditorFragment";
@@ -259,6 +262,12 @@ public class GroupEditorFragment extends Fragment implements SelectAccountDialog
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        onDoneClicked();
+    }
+
     private void startGroupMetaDataLoader() {
         mStatus = Status.LOADING;
         getLoaderManager().initLoader(LOADER_GROUP_METADATA, null,
@@ -428,6 +437,7 @@ public class GroupEditorFragment extends Fragment implements SelectAccountDialog
         if (mAutoCompleteTextView != null) {
             mAutoCompleteAdapter = new SuggestedMemberListAdapter(mContext,
                     android.R.layout.simple_dropdown_item_1line);
+            mAutoCompleteTextView.setThreshold(1);
             mAutoCompleteAdapter.setContentResolver(mContentResolver);
             mAutoCompleteAdapter.setAccountType(mAccountType);
             mAutoCompleteAdapter.setAccountName(mAccountName);
@@ -512,6 +522,30 @@ public class GroupEditorFragment extends Fragment implements SelectAccountDialog
     @Override
     public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
         inflater.inflate(R.menu.edit_group, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_discard:
+                return revert();
+            case R.id.menu_save:
+                onDoneClicked();
+                return true;
+            case android.R.id.home:
+                return revert();
+        }
+        return false;
+    }
+
+    public boolean revert() {
+        if (!hasNameChange() && !hasMembershipChange()) {
+            doRevertAction();
+        } else {
+            CancelEditDialogFragment.show(this);
+        }
+        return true;
     }
 
     private void doRevertAction() {
@@ -695,8 +729,13 @@ public class GroupEditorFragment extends Fragment implements SelectAccountDialog
     }
 
     private void addMember(Member member) {
-        // Update the display list
-        mListMembersToAdd.add(member);
+        // If the contact was just removed during this session, remove it from
+        // the list of members to remove
+        if (mListMembersToRemove.contains(member)) {
+            mListMembersToRemove.remove(member);
+        } else {
+            mListMembersToAdd.add(member);
+        }
         mListToDisplay.add(member);
         mMemberListAdapter.notifyDataSetChanged();
 
@@ -932,21 +971,28 @@ public class GroupEditorFragment extends Fragment implements SelectAccountDialog
         public View getView(int position, View convertView, ViewGroup parent) {
             View result;
             if (convertView == null) {
-                result = mLayoutInflater.inflate(mIsGroupMembershipEditable ?
-                        R.layout.group_member_item : R.layout.external_group_member_item,
+                result = mLayoutInflater.inflate(R.layout.edit_group_tile,
                         parent, false);
             } else {
                 result = convertView;
             }
+
             final Member member = getItem(position);
 
-            QuickContactBadge badge = (QuickContactBadge) result.findViewById(R.id.badge);
-            badge.assignContactUri(member.getLookupUri());
-
-            TextView name = (TextView) result.findViewById(R.id.name);
+            TextView name = (TextView) result.findViewById(R.id.contact_tile_name);
             name.setText(member.getDisplayName());
 
+            result.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, member.getLookupUri());
+                    ImplicitIntentsUtil.startActivityInApp(getActivity(), intent);
+                }
+            });
             View deleteButton = result.findViewById(R.id.delete_button_container);
+            if (mIsGroupMembershipEditable) {
+                deleteButton.setVisibility(View.VISIBLE);
+            }
             if (deleteButton != null) {
                 deleteButton.setOnClickListener(new OnClickListener() {
                     @Override
@@ -957,8 +1003,9 @@ public class GroupEditorFragment extends Fragment implements SelectAccountDialog
             }
             DefaultImageRequest request = new DefaultImageRequest(member.getDisplayName(),
                     member.getLookupKey(), true /* isCircular */);
-            mPhotoManager.loadPhoto(badge, member.getPhotoUri(),
-                    ViewUtil.getConstantPreLayoutWidth(badge), false, true /* isCircular */,
+            ImageView contactImage = (ImageView) result.findViewById(R.id.contact_tile_image);
+            mPhotoManager.loadPhoto(contactImage, member.getPhotoUri(),
+                    ViewUtil.getConstantPreLayoutWidth(contactImage), false, true /* isCircular */,
                             request);
             return result;
         }

@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.contacts.GroupListLoader;
@@ -199,6 +200,7 @@ public class GroupBrowseListAdapter extends BaseAdapter {
                 entry.getAccountType(), entry.getDataSet());
         viewCache.accountType.setText(accountType.getDisplayLabel(mContext));
         viewCache.accountName.setText(entry.getAccountName());
+        viewCache.accountIcon.setImageDrawable(accountType.getDisplayIcon(mContext));
     }
 
     private static Uri getGroupUriFromId(long groupId) {
@@ -217,6 +219,7 @@ public class GroupBrowseListAdapter extends BaseAdapter {
         public final View accountHeader;
         public final View accountHeaderExtraTopPadding;
         public final View divider;
+        public final ImageView accountIcon;
         private Uri mUri;
 
         public GroupListItemViewCache(View view) {
@@ -227,6 +230,7 @@ public class GroupBrowseListAdapter extends BaseAdapter {
             accountHeader = view.findViewById(R.id.group_list_header);
             accountHeaderExtraTopPadding = view.findViewById(R.id.header_extra_top_padding);
             divider = view.findViewById(R.id.divider);
+            accountIcon = (ImageView) view.findViewById(R.id.account_icon);
         }
 
         public void setUri(Uri uri) {
