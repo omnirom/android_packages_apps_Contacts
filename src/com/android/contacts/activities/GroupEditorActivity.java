@@ -60,9 +60,24 @@ public class GroupEditorActivity extends ContactsActivity
 
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(getResources().getString(R.string.group_editor_title));
-            actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            // Inflate a custom action bar that contains the "done" button for saving changes
+            // to the group
+            LayoutInflater inflater = (LayoutInflater) getSystemService
+                    (Context.LAYOUT_INFLATER_SERVICE);
+            View customActionBarView = inflater.inflate(R.layout.editor_custom_action_bar,
+                    null);
+            View saveMenuItem = customActionBarView.findViewById(R.id.save_menu_item);
+            saveMenuItem.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mFragment.onDoneClicked();
+                }
+            });
+            // Show the custom action bar but hide the home icon and title
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,
+                    ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME |
+                    ActionBar.DISPLAY_SHOW_TITLE);
+            actionBar.setCustomView(customActionBarView);
         }
 
         mFragment = (GroupEditorFragment) getFragmentManager().findFragmentById(
@@ -91,7 +106,10 @@ public class GroupEditorActivity extends ContactsActivity
 
     @Override
     public void onBackPressed() {
-        mFragment.revert();
+        // If the change could not be saved, then revert to the default "back" button behavior.
+        if (!mFragment.save()) {
+            super.onBackPressed();
+        }
     }
 
     @Override

@@ -242,9 +242,5 @@ public class ContactTileListFragment extends Fragment {
         public int getApproximateTileWidth() {
             return getView().getWidth() / mAdapter.getColumnCount();
         }
-
-        @Override
-        public void onContactLongSelected(Uri contactUri, Rect viewRect) {
-        }
     };
 }
