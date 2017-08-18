@@ -15,18 +15,9 @@
 -->
 <resources>
 
-    <style name="DetailActivityTheme" parent="@android:style/Theme.Material.Light">
+    <style name="DetailActivityTheme" parent="@style/PeopleTheme">
         <item name="android:actionBarStyle">@style/ContactsActionBarStyle</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow</item>
-        <item name="android:actionOverflowButtonStyle">@style/ContactsActionBarOverflowQP</item>
-        <item name="android:actionBarItemBackground">@drawable/item_background_material_borderless_dark</item>
-        <item name="android:actionBarWidgetTheme">@style/ContactsActionBarTheme</item>
-        <item name="android:textColorPrimary">@color/primary_text_color</item>
-        <item name="android:textColorSecondary">@color/secondary_text_color</item>
         <item name="android:listViewStyle">@style/ListViewStyle</item>
-        <item name="android:colorPrimaryDark">@color/primary_color_dark</item>
-        <item name="android:colorPrimary">@color/primary_color</item>
-        <item name="android:colorAccent">@color/primary_color</item>
     </style>
 
     <style name="EditorActivityTheme" parent="@style/PeopleTheme">
