@@ -48,7 +48,8 @@
                 android:layout_height="match_parent"
                 android:fadingEdge="none"
                 android:scrollbarStyle="outsideOverlay"
-                android:divider="@null"/>
+                android:divider="@null"
+                android:background="@color/group_list_background_color" />
             <include
                 layout="@layout/group_detail_fragment_empty_view"/>
         </LinearLayout>

@@ -20,7 +20,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="24dip"
-    android:visibility="gone">
+    android:visibility="gone"
+    android:background="@color/group_list_background_color" >
 
     <TextView
         android:layout_width="match_parent"
