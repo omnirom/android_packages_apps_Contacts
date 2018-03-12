@@ -41,6 +41,7 @@ import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Groups;
 import android.provider.ContactsContract.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -163,6 +164,10 @@ public class CustomContactListFilterActivity extends Activity implements
             // ContactsContract.Settings
             for (AccountInfo info : sourceAccounts) {
                 final AccountWithDataSet account = info.getAccount();
+                if (TextUtils.isEmpty(account.name)) {
+                    Log.d(TAG, "skip account  " + account);
+                    continue;
+                }
                 final AccountDisplay accountDisplay = new AccountDisplay(resolver, info);
 
                 final Uri.Builder groupsUri = Groups.CONTENT_URI.buildUpon()
