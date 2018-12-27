@@ -93,7 +93,7 @@
         <item name="android:windowBackground">@drawable/quantum_launchscreen_contacts</item>
         <!-- Ensure the status bar color matches the background (grey 500) -->
         <!-- TODO(yaolu): Switch to use quantum_grey if in Google3 -->
-        <item name="android:colorPrimaryDark">#9e9e9e</item>
+        <item name="android:colorPrimaryDark">@color/primary_color_dark</item>
     </style>
 
     <style name="PeopleActivityTheme" parent="@style/PeopleThemeAppCompat">
@@ -168,11 +168,11 @@
     </style>
 
     <style name="PopupMenuStyle" parent="@android:style/Widget.PopupMenu">
-        <item name="android:popupBackground">@android:color/white</item>
+        <item name="android:popupBackground">@color/contacts_accent_color</item>
     </style>
 
     <style name="PopupMenuStyleAppCompat" parent="Widget.AppCompat.PopupMenu">
-        <item name="android:popupBackground">@android:color/white</item>
+        <item name="android:popupBackground">@color/contacts_accent_color</item>
     </style>
 
     <style name="ContactsActionButtonStyle" parent="Widget.AppCompat.ActionButton">
@@ -282,14 +282,14 @@
     <style name="NonPhoneActivityTheme" parent="@android:Theme.Translucent.NoTitleBar">
     </style>
 
-    <style name="NonPhoneDialogTheme" parent="@android:Theme.Material.Light.Dialog">
+    <style name="NonPhoneDialogTheme" parent="@android:Theme.DeviceDefault.Light.Dialog">
     </style>
 
-    <style name="ConfirmAddDetailDialogTheme" parent="@android:style/Theme.Material.Light.Dialog.MinWidth">
+    <style name="ConfirmAddDetailDialogTheme" parent="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth">
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
-    <style name="ContactEditorAccountsChangedActivityTheme" parent="@android:style/Theme.Material.Light.Dialog.NoActionBar.MinWidth">
+    <style name="ContactEditorAccountsChangedActivityTheme" parent="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar.MinWidth">
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:textColorPrimary">@color/primary_text_color</item>
         <item name="android:textColorSecondary">@color/secondary_text_color</item>
@@ -297,8 +297,8 @@
         <item name="android:colorAccent">@color/primary_color</item>
     </style>
 
-    <style name="SelectableItem" parent="@android:style/Theme.Material.Light">
-        <item name="android:background">?android:attr/selectableItemBackground</item>
+    <style name="SelectableItem" parent="@android:style/Theme.DeviceDefault.Light">
+        <item name="android:background">@color/background_primary</item>
     </style>
 
     <style name="ExpandingEntryCardStyle">
@@ -336,8 +336,9 @@
 
     <!-- Inherit from Theme.Material.Light.Dialog instead of Theme.Material.Light.Dialog.Alert
         since the Alert dialog is private. They are identical anyway. -->
-    <style name="ContactsAlertDialogTheme" parent="@android:style/Theme.Material.Light.Dialog">
+    <style name="ContactsAlertDialogTheme" parent="@android:style/Theme.DeviceDefault.Light.Dialog">
         <item name="android:colorAccent">@color/primary_color</item>
+        <item name="android:background">@color/background_primary</item>
     </style>
 
     <style name="ContactsAlertDialogThemeAppCompat" parent="Theme.AppCompat.Light.Dialog.MinWidth">
@@ -453,6 +454,7 @@ background and text color. See also android:style/Widget.Holo.TextView.ListSepar
 
     <style name="ListViewStyle" parent="@android:style/Widget.Material.Light.ListView">
         <item name="android:overScrollMode">always</item>
+        <item name="android:background">@color/background_primary</item>
     </style>
 
     <!-- Adding padding to action button doesn't move it to left, we increase the button width to
@@ -467,7 +469,7 @@ background and text color. See also android:style/Widget.Holo.TextView.ListSepar
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="BackgroundOnlyTheme" parent="@android:style/Theme.Material.Light">
+    <style name="BackgroundOnlyTheme" parent="@android:style/Theme.DeviceDefault.Light">
         <item name="android:windowBackground">@null</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@null</item>
@@ -478,7 +480,7 @@ background and text color. See also android:style/Widget.Holo.TextView.ListSepar
         <item name="android:windowIsFloating">true</item>
     </style>
 
-    <style name="Theme.CallSubjectDialogTheme" parent="@android:style/Theme.Material.Light.Dialog">
+    <style name="Theme.CallSubjectDialogTheme" parent="@android:style/Theme.DeviceDefault.Light.Dialog">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
 
