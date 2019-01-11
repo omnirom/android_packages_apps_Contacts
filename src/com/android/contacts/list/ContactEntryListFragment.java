@@ -570,6 +570,7 @@ public abstract class ContactEntryListFragment<T extends ContactEntryListAdapter
 
         if (mListView != null) {
             mListView.setFastScrollEnabled(hasScrollbar);
+            mListView.setFastScrollAlwaysVisible(mListView.isFastScrollEnabled());
             mListView.setVerticalScrollbarPosition(mVerticalScrollbarPosition);
             mListView.setScrollBarStyle(ListView.SCROLLBARS_OUTSIDE_OVERLAY);
         }
@@ -645,6 +646,7 @@ public abstract class ContactEntryListFragment<T extends ContactEntryListAdapter
 
             if (mListView != null) {
                 mListView.setFastScrollEnabled(!flag);
+                mListView.setFastScrollAlwaysVisible(mListView.isFastScrollEnabled());
             }
         }
     }
@@ -801,6 +803,7 @@ public abstract class ContactEntryListFragment<T extends ContactEntryListAdapter
         mListView.setOnFocusChangeListener(this);
         mListView.setOnTouchListener(this);
         mListView.setFastScrollEnabled(!isSearchMode());
+        mListView.setFastScrollAlwaysVisible(mListView.isFastScrollEnabled());
 
         // Tell list view to not show dividers. We'll do it ourself so that we can *not* show
         // them when an A-Z headers is visible.
