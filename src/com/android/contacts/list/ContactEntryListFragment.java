@@ -570,6 +570,7 @@ public abstract class ContactEntryListFragment<T extends ContactEntryListAdapter
 
         if (mListView != null) {
             mListView.setFastScrollEnabled(hasScrollbar);
+            mListView.setScrollbarFadingEnabled(false);
             mListView.setVerticalScrollbarPosition(mVerticalScrollbarPosition);
             mListView.setScrollBarStyle(ListView.SCROLLBARS_OUTSIDE_OVERLAY);
         }
