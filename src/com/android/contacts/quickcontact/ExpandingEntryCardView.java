@@ -465,7 +465,7 @@ public class ExpandingEntryCardView extends CardView {
                 ViewGroup.LayoutParams.MATCH_PARENT, mDividerLineHeightPixels);
         // The separator is aligned with the text in the entry. This is offset by a default
         // margin. If there is an icon present, the icon's width and margin are added
-        int marginStart = res.getDimensionPixelSize(
+        /*int marginStart = res.getDimensionPixelSize(
                 R.dimen.expanding_entry_card_item_padding_start);
         ImageView entryIcon = (ImageView) entry.findViewById(R.id.icon);
         if (entryIcon.getVisibility() == View.VISIBLE) {
@@ -474,7 +474,7 @@ public class ExpandingEntryCardView extends CardView {
                     res.getDimensionPixelSize(R.dimen.expanding_entry_card_item_image_spacing);
             marginStart += imageWidthAndMargin;
         }
-        layoutParams.setMarginStart(marginStart);
+        layoutParams.setMarginStart(marginStart);*/
         separator.setLayoutParams(layoutParams);
         return separator;
     }

@@ -160,7 +160,7 @@
     <dimen name="expanding_entry_card_item_icon_margin_right">12dp</dimen>
     <dimen name="expanding_entry_card_item_header_only_margin_top">6dp</dimen>
 
-    <dimen name="expanding_entry_card_card_corner_radius">8dp</dimen>
+    <dimen name="expanding_entry_card_card_corner_radius">2dp</dimen>
     <dimen name="expanding_entry_card_header_margin_bottom">2dp</dimen>
     <!-- The top margin when the sub header and text views are both gone -->
     <dimen name="expanding_entry_card_item_header_only_margin_bottom">2dp</dimen>
@@ -382,5 +382,5 @@
     <!-- Side padding within the navigation drawer -->
     <dimen name="drawer_label_header_end_padding">24dp</dimen>
 
-    <dimen name="quickcontact_edge_radius">12dp</dimen>
+    <dimen name="quickcontact_edge_radius">0dp</dimen>
 </resources>

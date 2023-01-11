@@ -311,8 +311,9 @@
     </style>
 
     <style name="ExpandingEntryCardStyle">
-        <item name="android:elevation">@dimen/expanding_entry_card_elevation</item>
-        <item name="android:background">@color/expanding_entry_card_background_color</item>
+        <item name="cardElevation">@dimen/expanding_entry_card_elevation</item>
+        <item name="cardBackgroundColor">@color/expanding_entry_card_background_color</item>
+        <item name="contentPadding">4dp</item>
         <item name="android:layout_marginBottom">@dimen/expanding_entry_card_marginBottom</item>
         <item name="android:layout_marginEnd">@dimen/expanding_entry_card_marginStartEnd</item>
         <item name="android:layout_marginStart">@dimen/expanding_entry_card_marginStartEnd</item>
