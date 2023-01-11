@@ -40,6 +40,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Outline;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.BitmapDrawable;
@@ -90,6 +91,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnCreateContextMenuListener;
+import android.view.ViewOutlineProvider;
 import android.view.WindowManager;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -473,6 +475,26 @@ public class QuickContactActivity extends ContactsActivity {
         }
     };
 
+    private static class QuickContactHeaderViewOutline extends ViewOutlineProvider {
+        public int mRadius;
+        public boolean mBottomOnly;
+
+        public QuickContactHeaderViewOutline(int radius, boolean bottomOnly) {
+            mRadius = radius;
+            mBottomOnly = bottomOnly;
+        }
+        @Override
+        public void getOutline(View view, Outline outline) {
+            if (mBottomOnly) {
+                outline.setRoundRect(0, 0 - mRadius, view.getWidth(), view.getHeight(), mRadius);
+            } else {
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), mRadius);
+            }
+        }
+    }
+    private QuickContactHeaderViewOutline mOutlineProviderFull;
+    private QuickContactHeaderViewOutline mOutlineProviderBottom;
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         EntryContextMenuInfo menuInfo;
@@ -684,6 +706,11 @@ public class QuickContactActivity extends ContactsActivity {
         mAboutCard.setOnCreateContextMenuListener(mEntryContextMenuListener);
 
         mPhotoView = (QuickContactImageView) findViewById(R.id.photo);
+        mOutlineProviderFull = new QuickContactHeaderViewOutline(getResources().getDimensionPixelSize(R.dimen.quickcontact_edge_radius), false);
+        mOutlineProviderBottom = new QuickContactHeaderViewOutline(getResources().getDimensionPixelSize(R.dimen.quickcontact_edge_radius), true);
+        mPhotoView.setClipToOutline(true);
+        mPhotoView.setOutlineProvider(mOutlineProviderFull);
+
         final View transparentView = findViewById(R.id.transparent_view);
         if (mScroller != null) {
             transparentView.setOnClickListener(new OnClickListener() {
@@ -693,7 +720,7 @@ public class QuickContactActivity extends ContactsActivity {
                 }
             });
         }
-
+    
         // Allow a shadow to be shown under the toolbar.
         ViewUtil.addRectangularOutlineProvider(findViewById(R.id.toolbar_parent), getResources());
 
@@ -2041,9 +2068,12 @@ public class QuickContactActivity extends ContactsActivity {
         // Only use a custom status bar color if QuickContacts touches the top of the viewport.
         if (mScroller.getScrollNeededToBeFullScreen() <= 0) {
             desiredStatusBarColor = mStatusBarColor;
+            mPhotoView.setOutlineProvider(mOutlineProviderBottom);
         } else {
             desiredStatusBarColor = Color.TRANSPARENT;
+            mPhotoView.setOutlineProvider(mOutlineProviderFull);
         }
+
         // Animate to the new color.
         final ObjectAnimator animation = ObjectAnimator.ofInt(getWindow(), "statusBarColor",
                 getWindow().getStatusBarColor(), desiredStatusBarColor);

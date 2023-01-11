@@ -20,7 +20,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:id="@+id/content_scroller"
-    android:background="@color/card_margin_color">
+    android:background="@drawable/background_primary_background">
 
     <!-- All the cards should be inserted into this LinearLayout -->
     <LinearLayout
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="@dimen/first_card_marginTop"
-        android:background="@color/background_primary"
+        android:background="@drawable/background_primary_background"
         android:id="@+id/card_container" >
 
         <com.android.contacts.quickcontact.ExpandingEntryCardView
