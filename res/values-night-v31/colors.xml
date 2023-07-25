@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <resources>
-    <color name="primary_color_dark">@android:color/system_accent1_600</color>
+<!--     <color name="primary_color_dark">@android:color/system_accent1_600</color> -->
     <color name="primary_color">@android:color/system_accent1_600</color>
     <color name="group_primary_color_dark">@android:color/system_accent2_600</color>
     <color name="group_primary_color">@android:color/system_accent2_600</color>
@@ -37,7 +37,8 @@
     <color name="actionbar_icon_color_grey">#8C000000</color>
     <color name="actionbar_text_color_black">#DF000000</color>
     <color name="actionbar_color_grey_solid">#777777</color>
-    <color name="searchbox_text_color">@android:color/black</color>
+    <!--<color name="searchbox_text_color">@android:color/black</color>-->
+    <color name="searchbox_text_color">@color/omni_text1</color>
     <color name="searchbox_background_color">@color/background_primary</color>
     <color name="searchbox_hint_text_color">#66000000</color>
     <color name="search_shortcut_icon_color">@color/dialtacts_theme_color</color>
