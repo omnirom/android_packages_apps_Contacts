@@ -54,7 +54,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <!-- Required in P to run Service.startForeground() -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.HIDE_NON_SYSTEM_OVERLAY_WINDOWS" />
+    <uses-permission android:name="android.permission.HIDE_OVERLAY_WINDOWS" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <uses-feature
@@ -474,7 +474,8 @@
         <!-- Service to import contacts from the SIM card -->
         <service
             android:name=".SimImportService"
-            android:exported="false"/>
+            android:exported="false"
+            android:foregroundServiceType="shortService" />
 
         <!-- Attaches a photo to a contact. Started from external applications -->
         <activity
@@ -546,7 +547,8 @@
 
         <service
             android:name=".vcard.VCardService"
-            android:exported="false"/>
+            android:exported="false"
+            android:foregroundServiceType="dataSync"/>
         <!-- end vCard related -->
 
         <!-- Intercept Dialer Intents for devices without a phone.
