@@ -20,7 +20,7 @@
     <string name="contactsList" msgid="4456188358262700898">"कन्ट्याक्टहरू"</string>
     <string name="shortcut_add_contact" msgid="7949342235528657981">"सम्पर्क थप्नुहोस्"</string>
     <string name="shortcutContact" msgid="8009736387364461511">"कन्ट्याक्ट"</string>
-    <string name="shortcutDialContact" msgid="155367248069127153">"सीधा डायल गर्नुहोस्"</string>
+    <string name="shortcutDialContact" msgid="155367248069127153">"डाइरेक्ट डायल"</string>
     <string name="shortcutMessageContact" msgid="9123517151981679277">"डाइरेक्ट म्यासेज"</string>
     <string name="shortcutActivityTitle" msgid="5407832911005090417">"सम्पर्क छनौट गर्नुहोस्"</string>
     <string name="contactInsertOrEditActivityTitle" msgid="1788154962629911262">"सम्पर्कमा थप्नुहोस्"</string>
@@ -289,7 +289,7 @@
     <string name="missing_name" msgid="7970183292521946492">"(नाम छैन)"</string>
     <string name="favoritesFrequentContacted" msgid="2885862854079966676">"लगातार सम्पर्क गरिएको"</string>
     <string name="list_filter_phones" msgid="6839133198968393843">"फोन नम्बर भएका सबै कन्ट्याक्टहरू"</string>
-    <string name="list_filter_phones_work" msgid="5583425697781385616">"कार्य प्रोफाइलका कन्ट्याक्टहरू"</string>
+    <string name="list_filter_phones_work" msgid="5583425697781385616">"वर्क प्रोफाइलका कन्ट्याक्टहरू"</string>
     <string name="view_updates_from_group" msgid="6233444629074835594">"अपडेटहरू हेर्नुहोस्"</string>
     <string name="account_phone" msgid="8044426231251817556">"डिभाइस"</string>
     <string name="account_sim" msgid="3200457113308694663">"SIM"</string>
@@ -316,7 +316,7 @@
     <string name="ghostData_company" msgid="3873500610390675876">"कम्पनी"</string>
     <string name="ghostData_department" msgid="8610642449404163799">"विभाग"</string>
     <string name="ghostData_title" msgid="8584897460662904533">"शीर्षक"</string>
-    <string name="label_notes" msgid="7134226125644463585">"टिप्पणीहरू"</string>
+    <string name="label_notes" msgid="7134226125644463585">"नोटहरू"</string>
     <string name="label_custom_field" msgid="4160584225306364924">" कस्टम"</string>
     <string name="label_sip_address" msgid="8876347942587537552">"SIP"</string>
     <string name="websiteLabelsGroup" msgid="114754928100220315">"वेबसाइट"</string>
@@ -467,7 +467,7 @@
     <string name="description_search_video_call" msgid="1768558141309418755">"भिडियो कल गर्नुहोस्"</string>
     <string name="description_delete_contact" msgid="8110643050235441400">"मेट्नुहोस्"</string>
     <string name="description_no_name_header" msgid="8596201864512339003">"पदलोपचिन्ह"</string>
-    <string name="dynamic_shortcut_disabled_message" msgid="8770462908102469878">"यो सर्टकटलाई असक्षम पारिएको छ"</string>
+    <string name="dynamic_shortcut_disabled_message" msgid="8770462908102469878">"यो सर्टकटलाई अफ गरिएको छ"</string>
     <string name="dynamic_shortcut_contact_removed_message" msgid="8331735243566193974">"सम्पर्क हटाइएको थियो"</string>
     <string name="sim_import_button_text" msgid="2845608246304396009">"इम्पोर्ट गर्नुहोस्"</string>
     <string name="sim_import_title_none_selected" msgid="3527680774575468781">"कन्ट्याक्टहरू चयन गर्नुहोस्"</string>
